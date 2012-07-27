@@ -5,7 +5,7 @@
 Object.prototype.properties = function() {
   var result = [];
   for (var property in this) {
-    if (Object.prototype.hasOwnProperty.call(this, property)) {
+    if (Object.prototype.hasOwnProperty.call(this, property) && Object.prototype.propertyIsEnumerable.call(this, property)) {
       result.push(property);
     }
   }
@@ -32,6 +32,20 @@ Dictionary.prototype.each = function(action) {
     action(props[i], this.values[props[i]]);
   }
 }
+Dictionary.prototype.count = function() {
+  var count = 0;
+  this.each(function(key, value) {
+    count++;
+  });
+  return count;
+}
+Dictionary.prototype.keys = function() {
+  var keys = [];
+  this.each(function(key, value) {
+    keys.push(key);
+  });
+  return keys;
+};
 
 var numbers = new Dictionary({one: 1, three: 3, seven: 7});
 numbers.contains('three');

@@ -110,3 +110,17 @@ function multiply(a, b) {
 var double_number = partial(multiply, 2)
 
 map([1, 3, 5, 7, 9], double_number)
+
+// bind
+
+function bind(func, object) {
+  return function(){
+    return func.apply(object, arguments);
+  };
+}
+
+var testArray = [];
+var pushTest = bind(testArray.push, testArray);
+pushTest("A");
+pushTest("B");
+show(testArray);

@@ -12,6 +12,28 @@ Object.prototype.properties = function() {
   return result;
 }
 
+// clone prototype
+
+function clone(object) {
+  function OneShotConstructor(){}
+  OneShotConstructor.prototype = object;
+  return new OneShotConstructor();
+}
+
+function Foo() {};
+Foo.prototype.bar = function() { return "Foo bar indeed!" }
+Foo.prototype.foo = function() { return "Foo foo? Really?" }
+var foo = new Foo();
+print(foo.bar());
+print(foo.foo());
+
+function ExtendedFoo() {};
+ExtendedFoo.prototype = clone(Foo.prototype);
+ExtendedFoo.prototype.foo = function() { return "Yeah, foo foo is ok now." }
+var extendedFoo = new ExtendedFoo();
+print(extendedFoo.bar());
+print(extendedFoo.foo());
+
 // Dictionary class
 
 function Dictionary(initialValues) {
